@@ -1,0 +1,7 @@
+{
+  "compilerOptions": {
+    "module": "ESNext",
+    "outDir": "build",
+    "target": "es5"
+  }
+}

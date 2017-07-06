@@ -1,0 +1,28 @@
+{
+  "name": "eve-highlighter",
+  "version": "0.0.1",
+  "description": "Simple static highlighter for Eve documents",
+  "main": "build/highlighter.js",
+  "dependencies": {
+    "@types/codemirror": "0.0.41",
+    "codemirror": "^5.27.4"
+  },
+  "devDependencies": {
+    "rollup": "^0.43.0",
+    "rollup-plugin-node-resolve": "^3.0.0",
+    "typescript": "^2.4.1"
+  },
+  "scripts": {
+    "build": "tsc && rollup -c",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "eve",
+    "syntax",
+    "language",
+    "witheve",
+    "highlighter"
+  ],
+  "author": "Eve Team",
+  "license": "Apache-2.0"
+}
