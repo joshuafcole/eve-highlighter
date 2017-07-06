@@ -62,7 +62,8 @@ export function highlightDocument(container:HTMLElement) {
 
 export function highlightAll(containers = document.querySelectorAll("code")) {
   for(let container of nodeListToArray(containers)) {
-    if(container.parentElement.classList.contains("highlight")) continue;
+    let parent = container.parentElement;
+    if(parent && parent.classList.contains("highlight") && parent.parentElement.className.indexOf("language-") !== -1) continue;
 
     if(container.classList.contains("language-eve") || !container.className) {
       highlightBlock(container);
