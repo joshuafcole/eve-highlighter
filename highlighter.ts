@@ -1,16 +1,17 @@
-import "codemirror/addon/runmode/runmode-standalone.js";
-import "codemirror/addon/mode/simple.js";
-import "codemirror/addon/mode/overlay.js";
-import "codemirror/addon/mode/multiplex.js";
-import "codemirror/mode/xml/xml.js";
-import "codemirror/mode/htmlmixed/htmlmixed.js";
-import "codemirror/mode/markdown/markdown.js";
-import "codemirror/mode/gfm/gfm.js";
-import "codemirror-mode-eve/src/eve-mode";
+import "codemirror/addon/runmode/runmode-standalone";
+import "codemirror/addon/mode/simple";
+import "codemirror/addon/mode/overlay";
+import "codemirror/addon/mode/multiplex";
+import "codemirror/mode/xml/xml";
+import "codemirror/mode/htmlmixed/htmlmixed";
+import "codemirror/mode/markdown/markdown";
+import "codemirror/mode/gfm/gfm";
+import "codemirror-mode-eve";
 //import "../eve-mode.js";
 
 
-let mode = {name: "gfm", fencedCodeBlocks: true, taskLists: true};
+let documentMode = {name: "gfm", fencedCodeBlocks: true, taskLists: true};
+let blockMode = "eve";
 let CodeMirror = (window as any).CodeMirror;
 CodeMirror.defineMIME("", {name: "eve"});
 CodeMirror.defineMIME("text/html", {name: "htmlmixed"});
@@ -26,19 +27,19 @@ function typeToClass(type:string) {
 
 function injectHighlighted(container:HTMLElement) {
   let prev;
-  return function(token, type) {
+  return (token, type) => {
     var klass = typeToClass(type);
     if(!prev || prev.className !== klass) {
       prev = document.createElement("span");
       prev.className = klass;
       container.appendChild(prev);
+      console.log("MOVING TO CLASS", klass);
     }
     prev.textContent += token;
-
   }
 }
 
-export function highlight(container:HTMLElement) {
+export function highlight(container:HTMLElement, mode:any) {
   console.log("Container", container);
   if(container) {
     container.classList.add("CodeMirror");
@@ -48,14 +49,25 @@ export function highlight(container:HTMLElement) {
     container.innerHTML = "";
     CodeMirror.runMode(content, mode, injectHighlighted(container));
   }
+
+}
+
+export function highlightBlock(container:HTMLElement) {
+  return highlight(container, blockMode);
+}
+
+export function highlightDocument(container:HTMLElement) {
+  return highlight(container, documentMode);
 }
 
 export function highlightAll(containers = document.querySelectorAll("code")) {
   for(let container of nodeListToArray(containers)) {
-    if(container.classList.contains("language-eve") ||
-       container.classList.contains("language-eve-disabled") ||
-       container.className.indexOf("language-") === -1) {
-      highlight(container);
+    if(container.parentElement.classList.contains("highlight")) continue;
+
+    if(container.classList.contains("language-eve") || !container.className) {
+      highlightBlock(container);
+    } else if(container.classList.contains("language-eve-document")) {
+      highlightDocument(container);
     }
   }
 }
