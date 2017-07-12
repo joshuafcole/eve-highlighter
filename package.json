@@ -5,7 +5,8 @@
   "main": "build/highlighter.js",
   "dependencies": {
     "@types/codemirror": "0.0.41",
-    "codemirror": "^5.27.4"
+    "codemirror": "^5.27.4",
+    "codemirror-mode-eve": "git://git@github.com:witheve/codemirror-mode-eve.git"
   },
   "devDependencies": {
     "rollup": "^0.43.0",
