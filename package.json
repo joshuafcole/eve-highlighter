@@ -4,17 +4,19 @@
   "description": "Simple static highlighter for Eve documents",
   "main": "build/highlighter.js",
   "dependencies": {
-    "@types/codemirror": "0.0.41",
     "codemirror": "^5.27.4",
-    "codemirror-mode-eve": "git://git@github.com:witheve/codemirror-mode-eve.git"
+    "codemirror-mode-eve": "git://git@github.com:witheve/codemirror-mode-eve.git",
+    "postinstall-build": "^5.0.1"
   },
   "devDependencies": {
+    "@types/codemirror": "0.0.41",
     "rollup": "^0.43.0",
     "rollup-plugin-node-resolve": "^3.0.0",
     "typescript": "^2.4.1"
   },
   "scripts": {
     "build": "tsc && rollup -c",
+    "postinstall": "postinstall-build build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
